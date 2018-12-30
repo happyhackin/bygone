@@ -7,7 +7,7 @@ console.log = (...args) => {
   return oldLog(...args)
 }
 
-let valueHistory = (name='tracker') => {
+let valueHistory = (name='value') => {
   let history = []
   let state = null
   return new Proxy({
