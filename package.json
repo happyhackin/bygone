@@ -1,5 +1,5 @@
 {
-  "name": "value-history",
+  "name": "bygone",
   "version": "0.1.0",
   "description": "A JS Proxy for storing values with an append only history.",
   "main": "index.js",
@@ -11,5 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "lodash": "^4.17.11"
+  },
+  "devDependencies": {
+    "tape": "^4.9.2"
   }
 }

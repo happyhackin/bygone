@@ -7,13 +7,15 @@ console.log = (...args) => {
   return oldLog(...args)
 }
 
-let valueHistory = (name='value') => {
+let bygone = (name='value') => {
   let history = []
   let state = null
   return new Proxy({
     isValueHistory: true,
     get: () => state,
     getHistory: () => history,
+    valueOf: () => state,
+    setName: (value) => {name = value},
     set: (value) => { 
       state = value
       history.push(cloneDeep(value)) 
@@ -33,9 +35,12 @@ let valueHistory = (name='value') => {
         .join(options.join + options.indent)
     },
     clearHistory: () => {
+      history = [cloneDeep(state)]
+    },
+    reset: () => {
       history = []
       state = null
-    },
+    }
   },{
     set: (target, prop, value) => {
       let result = cloneDeep(state)
@@ -45,6 +50,7 @@ let valueHistory = (name='value') => {
       return 
     },
     get: (target, prop, caller) => {
+      if(prop === '_bygone_get_state') return state
       if(target[prop]) return target[prop]
       return target.get()[prop]
     },
@@ -55,9 +61,10 @@ let valueHistory = (name='value') => {
       delete state[prop]
     },
     ownKeys: (target) => {
+      if(typeof state != 'object') return ['_bygone_get_state']
       return Reflect.ownKeys(target.get())
     }
   })
 }
 
-module.exports = valueHistory
+module.exports = bygone

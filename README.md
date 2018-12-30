@@ -1,4 +1,4 @@
-# Value History
+# bygone
 
 A [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/handler) for storing values with an append only history.
 
